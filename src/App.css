@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+
+main > footer {
+  padding-top: calc(var(--block-spacing-vertical) * .66);
+  font-size: small;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+details {
+  margin-top: var(--spacing);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+details[open]>summary {
+  margin-bottom: calc(var(--spacing) * 1.5);
+}
+
+div#right {
+  border-top: var(--border-width) solid var(--card-border-color);
+  padding: var(--block-spacing-vertical) var(--block-spacing-horizontal);
+  margin-top: var(--block-spacing-vertical);
+  margin-bottom: calc(var(--block-spacing-vertical) * -1);
+  margin-left: calc(var(--block-spacing-horizontal) * -1);
+  margin-right: calc(var(--block-spacing-horizontal) * -1);
+  background-color: var(--card-sectionning-background-color);
+}
+
+@media (min-width: 992px) {
+  div#right {
+      border-top: none;
+      border-left: var(--border-width) solid var(--card-border-color);
+      margin-top: calc(var(--block-spacing-vertical) * -1);
+      margin-bottom: calc(var(--block-spacing-vertical) * -1);
+      margin-left: 0;
+      margin-right: calc(var(--block-spacing-horizontal) * -1);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+div#result {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-bottom: var(--block-spacing-vertical);
 }
 
-.App-link {
-  color: #61dafb;
+div#result svg {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  transition: opacity 0.25s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+div#result.loading svg {
+  opacity: 0.25;
+}
+
+
+div#result-paper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--block-spacing-vertical);
+}
+
+div#result-paper svg {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  transition: opacity 0.25s;
+}
+
+div#result-paper.loading svg {
+  opacity: 0.25;
 }
