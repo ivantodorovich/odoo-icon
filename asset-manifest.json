@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/odoo-icon/static/css/main.073c9b0a.css",
+    "main.js": "/odoo-icon/static/js/main.bf8a670c.js",
+    "static/js/787.681090c9.chunk.js": "/odoo-icon/static/js/787.681090c9.chunk.js",
+    "static/media/logo.svg": "/odoo-icon/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/odoo-icon/index.html",
+    "main.073c9b0a.css.map": "/odoo-icon/static/css/main.073c9b0a.css.map",
+    "main.bf8a670c.js.map": "/odoo-icon/static/js/main.bf8a670c.js.map",
+    "787.681090c9.chunk.js.map": "/odoo-icon/static/js/787.681090c9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.bf8a670c.js"
+  ]
+}
