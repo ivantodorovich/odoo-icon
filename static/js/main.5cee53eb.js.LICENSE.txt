@@ -1,3 +1,9 @@
+/*!
+* SVGPathCommander v1.0.4 (http://thednp.github.io/svg-path-commander)
+* Copyright 2022 © thednp
+* Licensed under MIT (https://github.com/thednp/svg-path-commander/blob/master/LICENSE)
+*/
+
 /**
  * @license React
  * react-dom.production.min.js
@@ -37,3 +43,17 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+/**
+* (c) Iconify
+*
+* For the full copyright and license information, please view the license.txt or license.gpl.txt
+* files at https://github.com/iconify/iconify
+*
+* Licensed under Apache 2.0 or GPL 2.0 at your option.
+* If derivative product is not compatible with one of licenses, you can pick one of licenses.
+*
+* @license Apache 2.0
+* @license GPL 2.0
+* @version 2.2.1
+*/
