@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/odoo-icon/static/css/main.a53db97f.css",
-    "main.js": "/odoo-icon/static/js/main.5cee53eb.js",
+    "main.css": "/odoo-icon/static/css/main.ada7b0e4.css",
+    "main.js": "/odoo-icon/static/js/main.1b999081.js",
     "static/js/787.681090c9.chunk.js": "/odoo-icon/static/js/787.681090c9.chunk.js",
     "index.html": "/odoo-icon/index.html",
     "static/media/github.svg": "/odoo-icon/static/media/github.8eecca42e8f059dfbe38ce6c061c896a.svg",
-    "main.a53db97f.css.map": "/odoo-icon/static/css/main.a53db97f.css.map",
-    "main.5cee53eb.js.map": "/odoo-icon/static/js/main.5cee53eb.js.map",
+    "main.ada7b0e4.css.map": "/odoo-icon/static/css/main.ada7b0e4.css.map",
+    "main.1b999081.js.map": "/odoo-icon/static/js/main.1b999081.js.map",
     "787.681090c9.chunk.js.map": "/odoo-icon/static/js/787.681090c9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a53db97f.css",
-    "static/js/main.5cee53eb.js"
+    "static/css/main.ada7b0e4.css",
+    "static/js/main.1b999081.js"
   ]
 }

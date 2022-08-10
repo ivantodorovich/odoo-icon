@@ -1,9 +1,3 @@
-/*!
-* SVGPathCommander v1.0.4 (http://thednp.github.io/svg-path-commander)
-* Copyright 2022 © thednp
-* Licensed under MIT (https://github.com/thednp/svg-path-commander/blob/master/LICENSE)
-*/
-
 /**
  * @license React
  * react-dom.production.min.js
