@@ -5,9 +5,9 @@
 */
 
 import paper from 'paper';
-import {bezierTAtSlope, bezierSplitAtT} from './bezier.js';
+import {bezierTAtSlope} from './bezier.js';
 
-const {Curve, Path, CompoundPath} = paper;
+const {Curve, Path, CompoundPath } = paper;
 
 
 function radians(degrees) {
@@ -30,25 +30,26 @@ export function paperMotionEffect(path, angle=45, distance=100, insert=true) {
     const paths = path.className === "Path" ? [path] : path.children;
 
     function processCurve(curve, delx, dely) {
-        const bez = curve.points.map(p => [p.x, p.y]);
-        const tees = bezierTAtSlope(bez, [delx, dely]).filter(i => (0 < i) && (i < 1)).sort();
-        const faceCurves = [];
+        const tees = bezierTAtSlope(curve.values, [delx, dely]).sort();
 
+        const faceCurves = [];
         if (tees.length === 1) {
-            const [one, two] = bezierSplitAtT(bez, tees[0]);
-            faceCurves.push(new Curve(...one.flat()));
-            faceCurves.push(new Curve(...two.flat()));
+            const [one, two] = Curve.subdivide(curve.values, tees[0]);
+            faceCurves.push(new Curve(...one));
+            faceCurves.push(new Curve(...two));
         } else if (tees.length === 2) {
-            const [one] = bezierSplitAtT(bez, tees[0]);
-            const [two, three] = bezierSplitAtT(bez, tees[1]);
-            faceCurves.push(new Curve(...one.flat()));
-            faceCurves.push(new Curve(...two.flat()));
-            faceCurves.push(new Curve(...three.flat()));
+            const [one] = Curve.subdivide(curve.values, tees[0]);
+            const [two, three] = Curve.subdivide(curve.values, tees[1]);
+            faceCurves.push(new Curve(...one));
+            faceCurves.push(new Curve(...two));
+            faceCurves.push(new Curve(...three));
         } else {
-            faceCurves.push(new Curve(...bez.flat()));
+            faceCurves.push(new Curve(...curve.values));
         }
 
-        const paths = [];
+        console.log(faceCurves.map(c => c.values));
+
+        const facePaths = [];
         for (const faceCurve of faceCurves) {
             const path = new Path({insert: false});
             path.moveTo(faceCurve.point1);
@@ -61,15 +62,18 @@ export function paperMotionEffect(path, angle=45, distance=100, insert=true) {
             path.lineTo(reversed.point1);
             path.cubicCurveTo(...reversed.points.slice(-3));
             path.closePath();
-            paths.push(path);
+            facePaths.push(path);
         }
 
-        return paths.reduce((path1, path2) => path1.unite(path2, {insert: false}));
+        return facePaths.length ?
+            facePaths.reduce((path1, path2) => path1.unite(path2, {insert: false})) :
+            new Path({insert: false});
     }
 
     const shadowPaths = new CompoundPath({insert: insert});
     for (const path of paths) {
-        const shadowPathFaces = path.curves.map(curve => processCurve(curve, delx, dely));
+        const shadowPathFaces = path.curves.map(curve => processCurve(curve, delx, dely)).filter(p => !p.isEmpty());
+        if (!shadowPathFaces.length) continue;
         const shadowPath = shadowPathFaces.reduce((path1, path2) => path1.unite(path2, {insert: false}));
         shadowPaths.addChild(shadowPath);
     }
