@@ -47,8 +47,6 @@ export function paperMotionEffect(path, angle=45, distance=100, insert=true) {
             faceCurves.push(new Curve(...curve.values));
         }
 
-        console.log(faceCurves.map(c => c.values));
-
         const facePaths = [];
         for (const faceCurve of faceCurves) {
             const path = new Path({insert: false});
