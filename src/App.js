@@ -122,8 +122,8 @@ const App = () => {
                     <div id="result" className={loading ? "loading" : null} dangerouslySetInnerHTML={{__html: icon && icon.exportSVG({asString: true})}}></div>
                     <hr />
                     <div className="grid">
-                        <button className="secondary" onClick={() => downloadObjectURL(icon.getPNGDataURL(), "icon.png")}>PNG</button>
-                        <button className="contrast" onClick={() => downloadObjectURL(icon.getSVGDataURL(), "icon.svg")}>SVG</button>
+                        <button className="secondary" onClick={async () => downloadObjectURL(await icon.getPNGDataURL(140), "icon.png")}>PNG</button>
+                        <button className="contrast" onClick={async () => downloadObjectURL(await icon.getSVGDataURL(), "icon.svg")}>SVG</button>
                     </div>
                 </div>
             </article>

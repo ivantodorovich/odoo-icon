@@ -6,7 +6,8 @@
 
 import paper from 'paper';
 import { adjustColor } from './color.js';
-import {paperMotionEffect} from './paper-motion.js';
+import { paperMotionEffect } from './paper-motion.js';
+import { svg2png } from './image.js';
 
 const WATERMARK = "Generated with https://ivantodorovich.github.io/odoo-icon";
 
@@ -47,13 +48,19 @@ class AbstractIcon {
         svg.prepend(document.createComment(` ${WATERMARK} `));
         return asString ? new XMLSerializer().serializeToString(svg) : svg;
     }
-    getSVGDataURL() {
+    async getSVGDataURL() {
         const svgString = this.exportSVG(true);
         const svgBlob = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
         return URL.createObjectURL(svgBlob);
     }
-    getPNGDataURL() {
-        return this.canvas.toDataURL("image/png");
+    async getPNGDataURL(size = undefined) {
+        if (size === undefined) {
+            return this.canvas.toDataURL("image/png");
+        }
+        const svgDataURL = await this.getSVGDataURL();
+        const pngDataURL = await svg2png(svgDataURL, size, size);
+        window.URL.revokeObjectURL(svgDataURL);
+        return pngDataURL;
     }
 }
 
