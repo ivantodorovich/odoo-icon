@@ -4,12 +4,14 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
 
+import decamelize from 'decamelize';
 import paper from 'paper';
 import { adjustColor } from './color.js';
 import { paperMotionEffect } from './paper-motion.js';
 import { svg2png } from './image.js';
 
-const WATERMARK = "Generated with https://ivantodorovich.github.io/odoo-icon";
+const ODOO_ICON_NS = "odoo-icon";
+const ODOO_ICON_NS_URI = "https://ivantodorovich.github.io/odoo-icon";
 
 
 class AbstractIcon {
@@ -34,18 +36,27 @@ class AbstractIcon {
     get iconPathData() {
         return this.options.iconPathData;
     }
+    get exportOptions() {
+        const ignoredOptions = ["iconPathData"];
+        const exportOptions = {version: "1.0"}
+        for (const [key, value] of Object.entries(this.options)) {
+            if (ignoredOptions.includes(key)) continue;
+            if (value === undefined) continue;
+            exportOptions[key] = value;
+        }
+        return exportOptions;
+    }
     redraw() {
         this.project.clear();
         this.project.activate();
     }
-    exportOptions() {
-        const exportedOptions = Object.assign({}, this.options);
-        delete exportedOptions.canvas;
-        return exportedOptions;
-    }
     exportSVG(asString = false) {
         const svg = this.project.exportSVG();
-        svg.prepend(document.createComment(` ${WATERMARK} `));
+        // Export settings as svg namespace attributes
+        for (const [key, value] of Object.entries(this.exportOptions)) {
+            const exportKey = decamelize(key, {separator: "-"});
+            svg.setAttributeNS(ODOO_ICON_NS_URI, `${ODOO_ICON_NS}:${exportKey}`, value);
+        }
         return asString ? new XMLSerializer().serializeToString(svg) : svg;
     }
     async getSVGDataURL() {
@@ -66,6 +77,11 @@ class AbstractIcon {
 
 
 class AbstractOdooIcon extends AbstractIcon {
+    static version = undefined;
+
+    get version() {
+        return this.constructor.version;
+    }
     get defaultOptions() {
         return Object.assign(super.defaultOptions, {
             iconSize: 0.65,
@@ -77,10 +93,17 @@ class AbstractOdooIcon extends AbstractIcon {
     get absIconSize() {
         return Math.ceil(this.options.iconSize * this.options.size);
     }
+    get exportOptions() {
+        const exportOptions = super.exportOptions;
+        exportOptions.odooVersion = this.version;
+        return exportOptions;
+    }
 }
 
 
 export class Odoo11Icon extends AbstractOdooIcon {
+    static version = "11.0";
+
     drawBox() {
         return new paper.Path.Rectangle({
             name: "box",
@@ -130,6 +153,8 @@ export class Odoo11Icon extends AbstractOdooIcon {
 
 
 export class Odoo12Icon extends AbstractOdooIcon {
+    static version = "12.0";
+
     get defaultOptions() {
         return Object.assign(super.defaultOptions, {
             backgroundGradient: 0.2,
@@ -224,10 +249,10 @@ export class Odoo12Icon extends AbstractOdooIcon {
 }
 
 
-export class Odoo13Icon extends Odoo12Icon {}
-export class Odoo14Icon extends Odoo12Icon {}
-export class Odoo15Icon extends Odoo12Icon {}
-export class Odoo16Icon extends Odoo12Icon {}
+export class Odoo13Icon extends Odoo12Icon { static version = "13.0"; }
+export class Odoo14Icon extends Odoo12Icon { static version = "14.0"; }
+export class Odoo15Icon extends Odoo12Icon { static version = "15.0"; }
+export class Odoo16Icon extends Odoo12Icon { static version = "16.0"; }
 
 
 export const OdooIcons = {
