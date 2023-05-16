@@ -29,7 +29,7 @@ const IconifyIconPicker = ({name, required, placeholder, defaultValue, onChange}
             const iconPath = getCombinedPathFromSvg(iconSVG);
             onChange && onChange(iconPath);
         })();
-    }, [iconName]);
+    }, [iconName, onChange]);
 
     return (
         <input
