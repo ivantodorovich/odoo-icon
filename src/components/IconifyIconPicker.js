@@ -6,7 +6,7 @@
 
 import { useState, useEffect } from 'react';
 import { getCombinedPathFromSvg } from '../icon/svg.js';
-import { iconExists, loadIcon, renderSVG } from '@iconify/iconify';
+import Iconify from '@iconify/iconify'
 
 const DEFAULT_ICON_NAME = "mdi:home";
 
@@ -19,17 +19,17 @@ const IconifyIconPicker = ({name, required, placeholder, defaultValue, onChange}
         (async () => {
             const iconNameSanitized = iconName.toLowerCase().trim();
             try {
-                if (!iconExists(iconNameSanitized)) {
-                    await loadIcon(iconNameSanitized);
+                if (!Iconify.iconExists(iconNameSanitized)) {
+                    await Iconify.loadIcon(iconNameSanitized);
                 }
             } catch (e) {
                 return;
             }
-            const iconSVG = renderSVG(iconNameSanitized).outerHTML;
+            const iconSVG = Iconify.renderSVG(iconNameSanitized).outerHTML;
             const iconPath = getCombinedPathFromSvg(iconSVG);
             onChange && onChange(iconPath);
         })();
-    }, [iconName, onChange]);
+    }, [iconName]);
 
     return (
         <input

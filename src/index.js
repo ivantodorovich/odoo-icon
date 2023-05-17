@@ -1,8 +1,8 @@
+import "@picocss/pico";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import "@picocss/pico";
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from './App.js';
+import reportWebVitals from './reportWebVitals.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

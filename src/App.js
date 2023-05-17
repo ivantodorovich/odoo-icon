@@ -6,10 +6,10 @@
 
 import './App.css';
 import React, { useState, useEffect, useCallback } from 'react';
+import {useDropzone} from 'react-dropzone';
 import github from './github.svg';
-import ColorPicker, { DEFAULT_COLORS } from './components/ColorPicker';
-import IconifyIconPicker from './components/IconifyIconPicker';
-import { useDropzone } from 'react-dropzone'
+import ColorPicker, { DEFAULT_COLORS } from './components/ColorPicker.js';
+import IconifyIconPicker from './components/IconifyIconPicker.js';
 import { OdooIcons } from './icon/icon.js';
 import { getCombinedPathFromSvg } from './icon/svg.js';
 import { downloadObjectURL } from './utils/download.js';
