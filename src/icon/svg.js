@@ -7,6 +7,19 @@
 import paper from 'paper';
 
 
+/**
+ * Parses an SVG content string into an SVG element.
+ *
+ * @param {string} svgContent - A string representing the content of an SVG file.
+ * @returns {SVGElement} The SVG element.
+ */
+export function getSVGElementFromString(svgContent) {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(svgContent, "image/svg+xml");
+    return xmlDoc.documentElement;
+}
+
+
 export function getCombinedPathFromSvg(svg) {
     const canvas = document.createElement("canvas");
     const project = new paper.Project(canvas);
