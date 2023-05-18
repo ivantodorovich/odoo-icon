@@ -10,7 +10,7 @@ import {useDropzone} from 'react-dropzone';
 import github from './github.svg';
 import ColorPicker, { DEFAULT_COLORS } from './components/ColorPicker.js';
 import IconifyIconPicker from './components/IconifyIconPicker.js';
-import { OdooIcons } from './icon/icon.js';
+import { OdooIcons, readIconSpecsFromString } from './icon/icon.js';
 import { getCombinedPathFromSvg } from './icon/svg.js';
 import { downloadObjectURL } from './utils/download.js';
 
@@ -35,8 +35,21 @@ const App = () => {
         const file = validFiles[0];
         const reader = new FileReader();
         reader.onload = e => {
-            const iconPath = getCombinedPathFromSvg(e.target.result);
-            setIconSpec(iconSpec => {return {...iconSpec, iconPath}});
+            const svgContent = e.target.result;
+            const specs = readIconSpecsFromString(svgContent);
+            if (specs.version) {
+                console.log(specs);
+                const newSpecs = {
+                    version: specs.odooVersion,
+                    size: specs.iconSize * 100,
+                    color: specs.backgroundColor,
+                    iconPath: specs.iconPathData,
+                }
+                setIconSpec(iconSpec => {return {...iconSpec, ...newSpecs}})
+            } else {
+                const iconPath = getCombinedPathFromSvg(svgContent);
+                setIconSpec(iconSpec => {return {...iconSpec, iconPath}});
+            }
         }
         reader.readAsText(file);
     }, []);

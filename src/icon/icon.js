@@ -4,14 +4,55 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
 
+import camelcase from 'camelcase';
 import decamelize from 'decamelize';
 import paper from 'paper';
+import { getSVGElementFromString } from './svg.js';
 import { adjustColor } from './color.js';
 import { paperMotionEffect } from './paper-motion.js';
 import { svg2png } from './image.js';
 
 const ODOO_ICON_NS = "odoo-icon";
 const ODOO_ICON_NS_URI = "https://ivantodorovich.github.io/odoo-icon";
+
+
+/**
+ * Extracts icon specifications from an SVG element.
+ *
+ * @param {SVGElement} svg - The SVG element from which icon specifications should be read.
+ * @returns {Object} An object representing the icon specifications.
+ */
+export function readIconSpecs(svg) {
+    const specs = {}
+    // Read specs from the SVG element's attributes
+    for (const attr of svg.attributes) {
+        if (attr.namespaceURI === ODOO_ICON_NS_URI) {
+            specs[camelcase(attr.localName)] = attr.value;
+        }
+    }
+    // Sanitize types. TODO: Use a schema instead.
+    const numericAttrs = ["size", "iconSize", "iconFlatShadowAngle", "boxRadius", "backgroundGradient"]
+    for (const attr of numericAttrs) {
+        if (specs[attr]) {
+            specs[attr] = parseFloat(specs[attr]);
+        }
+    }
+    // The icon path is read directly from the element with id="icon"
+    if (specs.version) {
+        specs.iconPathData = svg.querySelector("#icon").getAttribute("d");
+    }
+    return specs;
+}
+
+/**
+ * Parses an SVG content string into an SVG element and then extracts icon specifications from it.
+ *
+ * @param {string} svgContent - A string representing the content of an SVG file.
+ * @returns {Object} An object representing the icon specifications.
+ */
+export function readIconSpecsFromString(svgContent) {
+    return readIconSpecs(getSVGElementFromString(svgContent));
+}
 
 
 class AbstractIcon {
