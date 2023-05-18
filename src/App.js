@@ -41,6 +41,10 @@ const App = () => {
         reader.readAsText(file);
     }, []);
 
+    const onChangeIconPicker = useCallback(iconPath => {
+        setIconSpec(iconSpec => {return {...iconSpec, iconPath}});
+    }, []);
+
     const {getRootProps} = useDropzone({
         onDrop,
         noClick: true,
@@ -91,7 +95,7 @@ const App = () => {
                             name="icon"
                             required="required"
                             defaultValue="mdi:home"
-                            onChange={iconPath => setIconSpec(iconSpec => {return {...iconSpec, iconPath}})}
+                            onChange={onChangeIconPicker}
                         />
                     </label>
                     <details>
