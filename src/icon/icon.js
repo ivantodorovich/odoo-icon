@@ -72,6 +72,7 @@ class AbstractIcon {
             iconSize: 1,
             iconColor: "#000000",
             iconPathData: "",
+            iconIconifyName: "",
         }
     }
     get iconPathData() {
