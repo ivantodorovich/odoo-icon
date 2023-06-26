@@ -22,6 +22,7 @@ const App = () => {
     const [iconSpec, setIconSpec] = useState({
         version: VERSIONS[VERSIONS.length -1],
         iconPath: null,
+        iconIconifyName: null,
         color: DEFAULT_COLORS[Math.floor(Math.random()*DEFAULT_COLORS.length)],
         size: 65,
     });
@@ -44,6 +45,7 @@ const App = () => {
                     size: specs.iconSize * 100,
                     color: specs.backgroundColor,
                     iconPath: specs.iconPathData,
+                    iconNameSanitized: specs.iconIconifyName,
                 }
                 setIconSpec(iconSpec => {return {...iconSpec, ...newSpecs}})
             } else {
@@ -54,8 +56,8 @@ const App = () => {
         reader.readAsText(file);
     }, []);
 
-    const onChangeIconPicker = useCallback(iconPath => {
-        setIconSpec(iconSpec => {return {...iconSpec, iconPath}});
+    const onChangeIconPicker = useCallback(iconDetails => {
+        setIconSpec(iconSpec => {return {...iconSpec, ...iconDetails}});
     }, []);
 
     const {getRootProps} = useDropzone({
@@ -65,10 +67,11 @@ const App = () => {
     })
 
     useEffect(() => {
-        const {version, iconPath, color, size} = iconSpec;
+        const {version, iconPath, name, color, size} = iconSpec;
         setLoading(true);
         setIcon(new OdooIcons[version]({
             iconPathData: iconPath,
+            iconIconifyName: name,
             backgroundColor: color,
             iconSize: size / 100,
         }));

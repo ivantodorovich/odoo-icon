@@ -11,7 +11,7 @@ import Iconify from '@iconify/iconify'
 const DEFAULT_ICON_NAME = "mdi:home";
 
 
-const IconifyIconPicker = ({name, required, placeholder, defaultValue, onChange}) => {
+const IconifyIconPicker = ({ name, required, placeholder, defaultValue, onChange }) => {
 
     const [iconName, setIconName] = useState(defaultValue || DEFAULT_ICON_NAME);
 
@@ -27,7 +27,7 @@ const IconifyIconPicker = ({name, required, placeholder, defaultValue, onChange}
             }
             const iconSVG = Iconify.renderSVG(iconNameSanitized).outerHTML;
             const iconPath = getCombinedPathFromSvg(iconSVG);
-            onChange && onChange(iconPath);
+            onChange && onChange({ iconPath: iconPath, name: iconNameSanitized });
         })();
     }, [iconName, onChange]);
 
