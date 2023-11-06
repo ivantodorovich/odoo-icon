@@ -20,7 +20,7 @@
     "web-vitals": "^3.5.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "canvas": "^2.11.2"
